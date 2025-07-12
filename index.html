@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardputer Hub: O Seu Ponto de Partida</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- Reset e Variáveis Globais --- */
+        :root {
+            --bg-color: #121212;
+            --surface-color: #1E1E1E;
+            --primary-text: #EAEAEA;
+            --secondary-text: #B0B0B0;
+            --accent-color: #00FFFF;
+            --accent-color-dark: #00cccc;
+            --border-color: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--primary-text);
+            line-height: 1.6;
+        }
+
+        /* --- Tipografia e Elementos Gerais --- */
+        h1, h2, h3 {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem); /* Fonte responsiva */
+            font-weight: 900;
+        }
+
+        h2 {
+            font-size: 2.25rem;
+            color: var(--accent-color);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: var(--accent-color);
+            margin: 0.5rem auto 0;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: var(--secondary-text);
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--accent-color-dark);
+        }
+        
+        .code {
+            font-family: 'Fira Code', monospace;
+            background-color: var(--surface-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        /* --- Layout --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* --- Header / Navegação --- */
+        .main-header {
+            padding: 1rem 2rem;
+            background-color: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .navbar .logo strong {
+            color: var(--accent-color);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-weight: 700;
+            color: var(--primary-text);
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* --- Seletor de Idioma --- */
+        .lang-switcher {
+            display: flex;
+            gap: 0.5rem;
+            border-left: 1px solid var(--border-color);
+            padding-left: 1rem;
+        }
+
+        .lang-switcher button {
+            background: none;
+            border: 1px solid transparent;
+            color: var(--secondary-text);
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+        }
+
+        .lang-switcher button:hover {
+            color: var(--primary-text);
+        }
+
+        .lang-switcher button.active {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+
+        /* --- Seção Hero e Carrossel --- */
+        #hero {
+            padding-top: 100px;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+
+        #hero .container {
+            padding-top: 2rem;
+        }
+        
+        #hero .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        #hero h1 {
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+
+        #hero p {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 1.5rem auto 2.5rem;
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            border: 2px solid var(--accent-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent-color-dark);
+            border-color: var(--accent-color-dark);
+            color: var(--bg-color);
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-text);
+            border: 2px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        .carousel-wrapper {
+            max-width: 450px;
+            margin: 2rem auto 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .image-carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+        }
+
+        .slide img {
+            display: block;
+            width: 100%;
+            border-radius: 8px;
+            filter: drop-shadow(0 0 25px rgba(0, 255, 255, 0.15));
+        }
+
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .carousel-nav a {
+            display: block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-nav a:hover {
+            background-color: var(--secondary-text);
+        }
+
+        /* --- Seção de Especificações --- */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            text-align: center;
+        }
+
+        .spec-item {
+            background-color: var(--surface-color);
+            padding: 2rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .spec-item h3 {
+            font-size: 1.2rem;
+            color: var(--primary-text);
+        }
+
+        .spec-item p {
+            margin: 0;
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+            color: var(--accent-color);
+        }
+
+        /* --- Seção de Downloads e Links --- */
+        .card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            border-color: var(--accent-color);
+        }
+        
+        .card h3 {
+            color: var(--primary-text);
+        }
+
+        .card .btn {
+            margin-top: 1rem;
+        }
+        
+        .tool-category h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-text);
+        }
+        
+        #downloads .tool-category {
+            margin-bottom: 3rem;
+        }
+
+        /* --- Footer --- */
+        .main-footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            background-color: var(--surface-color);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .main-footer p {
+            margin: 0;
+            color: var(--secondary-text);
+        }
+
+        /* --- Responsividade --- */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .nav-menu {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .lang-switcher {
+                border-left: none;
+                padding-left: 0;
+            }
+            
+            #hero {
+                text-align: center;
+            }
+            
+            #hero p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <nav class="navbar">
+            <div class="logo">Cardputer <strong>Hub</strong></div>
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="#specs" data-translate-key="navSpecs">Especificações</a></li>
+                    <li><a href="#downloads" data-translate-key="navDownloads">Downloads</a></li>
+                    <li><a href="#links" data-translate-key="navLinks">Links</a></li>
+                </ul>
+                <div class="lang-switcher">
+                    <button data-lang="pt">PT</button>
+                    <button data-lang="en">EN</button>
+                    <button data-lang="es">ES</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 data-translate-key="heroTitle">M5 Cardputer: O Universo Maker no seu Bolso.</h1>
+                    <p data-translate-key="heroSubtitle">Uma plataforma de desenvolvimento portátil e poderosa baseada no ESP32-S3. De automação a jogos retro, seus projetos começam aqui. Explore, crie e inove.</p>
+                     <div class="button-group">
+                        <a href="#downloads" class="btn btn-primary" data-translate-key="btnStart">Comece a Programar</a>
+                        <a href="https://www.youtube.com/results?search_query=m5+cardputer+projects" target="_blank" class="btn btn-secondary" data-translate-key="btnProjects">Ver Projetos</a>
+                    </div>
+                    
+                    <div class="carousel-wrapper">
+                        <div class="image-carousel">
+                            <div class="slide">
+                                <img src="images/cardputer-1.webp" alt="M5 Cardputer - Vista frontal">
+                            </div>
+                            <div class="slide">
+                                <img src="images/cardputer-2.webp" alt="M5 Cardputer - Vista lateral com portas">
+                            </div>
+                            <div class="slide">
+                                <img src="images/cardputer-3.webp" alt="M5 Cardputer - Vista superior">
+                            </div>
+                            <div class="slide">
+                                <img src="images/cardputer-4.webp" alt="M5 Cardputer - Em uso">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-nav"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="specs" class="container">
+            <h2 data-translate-key="specsTitle">Especificações Técnicas ⚙️</h2>
+            <div class="specs-grid">
+                <div class="spec-item"><h3 data-translate-key="specCPU">CPU</h3><p>ESP32-S3, Dual-Core @ 240MHz</p></div>
+                <div class="spec-item"><h3 data-translate-key="specMemory">Memória</h3><p>8MB PSRAM, 16MB Flash</p></div>
+                <div class="spec-item"><h3 data-translate-key="specScreen">Tela</h3><p>1.14" TFT LCD (240x135)</p></div>
+                <div class="spec-item"><h3 data-translate-key="specKeyboard">Teclado</h3><p>QWERTY com 56 teclas</p></div>
+                <div class="spec-item"><h3 data-translate-key="specConnectivity">Conectividade</h3><p>Wi-Fi & Bluetooth 5</p></div>
+                <div class="spec-item"><h3 data-translate-key="specPorts">Portas</h3><p>USB-C, MicroSD, Grove</p></div>
+                <div class="spec-item"><h3 data-translate-key="specExtras">Extras</h3><p>Microfone, IR, Alto-falante</p></div>
+            </div>
+        </section>
+
+        <section id="downloads" class="container">
+            <h2 data-translate-key="downloadsTitle">Downloads e Ferramentas 🚀</h2>
+
+            <div class="tool-category">
+                <h3 data-translate-key="burnerTitle">Software de Gravação (Burner)</h3>
+                <div class="card">
+                    <h3 data-translate-key="burnerCardTitle">M5Burner v3</h3>
+                    <p data-translate-key="burnerCardText">A ferramenta oficial da M5Stack para gravar o firmware de forma rápida e fácil. Indispensável para começar.</p>
+                    <a href="https://m5stack.com/download" target="_blank" class="btn btn-primary" data-translate-key="burnerCardBtn">Download M5Burner</a>
+                </div>
+            </div>
+
+            <div class="tool-category">
+                <h3 data-translate-key="ideTitle">Ambientes de Desenvolvimento (IDEs)</h3>
+                <div class="card">
+                    <h3 data-translate-key="arduinoCardTitle">Arduino IDE</h3>
+                    <p data-translate-key="arduinoCardText">O ambiente clássico e versátil para programação em C/C++. Perfeito para acessar a vasta biblioteca de projetos da comunidade Arduino.</p>
+                    <p><small data-translate-key="arduinoCardUrl">URL para o Gerenciador de Placas: <code class="code">https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json</code></small></p>
+                    <a href="https://www.arduino.cc/en/software" target="_blank" class="btn btn-primary" data-translate-key="arduinoCardBtn">Download Arduino IDE</a>
+                </div>
+                <div class="card">
+                    <h3 data-translate-key="uiFlowCardTitle">UIFlow 2.0</h3>
+                    <p data-translate-key="uiFlowCardText">A plataforma de programação visual (blockly) e MicroPython da M5Stack. Ideal para iniciantes e prototipagem rápida.</p>
+                    <a href="https://flow.m5stack.com/" target="_blank" class="btn btn-primary" data-translate-key="uiFlowCardBtn">Acessar UIFlow 2.0 (Web)</a>
+                </div>
+                <div class="card">
+                    <h3 data-translate-key="platformIoCardTitle">PlatformIO</h3>
+                    <p data-translate-key="platformIoCardText">Uma alternativa poderosa ao Arduino IDE, integrada ao VS Code. Oferece depuração avançada e gerenciamento de bibliotecas.</p>
+                    <a href="https://platformio.org/install/ide?install=vscode" target="_blank" class="btn btn-primary" data-translate-key="platformIoCardBtn">Instalar PlatformIO</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="links" class="container">
+            <h2 data-translate-key="linksTitle">Links Oficiais M5Stack</h2>
+            <div class="specs-grid"> 
+                <div class="card">
+                    <h3 data-translate-key="officialSiteCardTitle">Site Oficial</h3>
+                    <p data-translate-key="officialSiteCardText">Explore o ecossistema completo de produtos da M5Stack.</p>
+                    <a href="https://m5stack.com/" target="_blank" data-translate-key="officialSiteCardBtn">Visitar m5stack.com</a>
+                </div>
+                <div class="card">
+                    <h3 data-translate-key="productPageCardTitle">Página do Produto</h3>
+                    <p data-translate-key="productPageCardText">Veja detalhes, acessórios e documentação oficial do Cardputer.</p>
+                    <a href="https://shop.m5stack.com/products/m5stack-cardputer-kit-w-m5stamp-s3" target="_blank" data-translate-key="productPageCardBtn">Ver na Loja</a>
+                </div>
+                <div class="card">
+                    <h3 data-translate-key="docsCardTitle">Documentação</h3>
+                    <p data-translate-key="docsCardText">Guias, tutoriais e exemplos de código direto do fabricante.</p>
+                    <a href="https://docs.m5stack.com/" target="_blank" data-translate-key="docsCardBtn">Acessar Docs</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <p>Copyright © 2025 by Josafa's | <a href="mailto:josafa.souza@gmail.com">josafa.souza@gmail.com</a></p>
+    </footer>
+
+    <script>
+        // --- Script para o Carrossel de Imagens ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.querySelector('.image-carousel');
+            if (!carousel) return;
+
+            const slides = carousel.querySelectorAll('.slide');
+            const navContainer = document.querySelector('.carousel-nav');
+            const slideCount = slides.length;
+            let currentIndex = 0;
+            let intervalId;
+
+            if (slideCount > 0) {
+                for (let i = 0; i < slideCount; i++) {
+                    const navDot = document.createElement('a');
+                    navDot.href = '#';
+                    navContainer.appendChild(navDot);
+                }
+            }
+
+            const navDots = navContainer.querySelectorAll('a');
+
+            function updateCarousel() {
+                carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+                navDots.forEach((dot, index) => {
+                    dot.style.backgroundColor = (index === currentIndex) ? 'var(--accent-color)' : 'var(--border-color)';
+                });
+            }
+
+            function showNextSlide() {
+                currentIndex = (currentIndex + 1) % slideCount;
+                updateCarousel();
+            }
+
+            function startAutoplay() {
+                if (slideCount > 1) {
+                    intervalId = setInterval(showNextSlide, 3000);
+                }
+            }
+
+            if (slideCount > 0) {
+                updateCarousel();
+                startAutoplay();
+            }
+        });
+
+        // --- Script para Troca de Idioma ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const translations = {
+                pt: {
+                    navSpecs: "Especificações",
+                    navDownloads: "Downloads",
+                    navLinks: "Links",
+                    heroTitle: "M5 Cardputer: O Universo Maker no seu Bolso.",
+                    heroSubtitle: "Uma plataforma de desenvolvimento portátil e poderosa baseada no ESP32-S3. De automação a jogos retro, seus projetos começam aqui. Explore, crie e inove.",
+                    btnStart: "Comece a Programar",
+                    btnProjects: "Ver Projetos",
+                    specsTitle: "Especificações Técnicas ⚙️",
+                    specCPU: "CPU",
+                    specMemory: "Memória",
+                    specScreen: "Tela",
+                    specKeyboard: "Teclado",
+                    specConnectivity: "Conectividade",
+                    specPorts: "Portas",
+                    specExtras: "Extras",
+                    downloadsTitle: "Downloads e Ferramentas 🚀",
+                    burnerTitle: "Software de Gravação (Burner)",
+                    burnerCardTitle: "M5Burner v3",
+                    burnerCardText: "A ferramenta oficial da M5Stack para gravar o firmware de forma rápida e fácil. Indispensável para começar.",
+                    burnerCardBtn: "Download M5Burner",
+                    ideTitle: "Ambientes de Desenvolvimento (IDEs)",
+                    arduinoCardTitle: "Arduino IDE",
+                    arduinoCardText: "O ambiente clássico e versátil para programação em C/C++. Perfeito para acessar a vasta biblioteca de projetos da comunidade Arduino.",
+                    arduinoCardUrl: "URL para o Gerenciador de Placas: <code class='code'>https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json</code>",
+                    arduinoCardBtn: "Download Arduino IDE",
+                    uiFlowCardTitle: "UIFlow 2.0",
+                    uiFlowCardText: "A plataforma de programação visual (blockly) e MicroPython da M5Stack. Ideal para iniciantes e prototipagem rápida.",
+                    uiFlowCardBtn: "Acessar UIFlow 2.0 (Web)",
+                    platformIoCardTitle: "PlatformIO",
+                    platformIoCardText: "Uma alternativa poderosa ao Arduino IDE, integrada ao VS Code. Oferece depuração avançada e gerenciamento de bibliotecas.",
+                    platformIoCardBtn: "Instalar PlatformIO",
+                    linksTitle: "Links Oficiais M5Stack",
+                    officialSiteCardTitle: "Site Oficial",
+                    officialSiteCardText: "Explore o ecossistema completo de produtos da M5Stack.",
+                    officialSiteCardBtn: "Visitar m5stack.com",
+                    productPageCardTitle: "Página do Produto",
+                    productPageCardText: "Veja detalhes, acessórios e documentação oficial do Cardputer.",
+                    productPageCardBtn: "Ver na Loja",
+                    docsCardTitle: "Documentação",
+                    docsCardText: "Guias, tutoriais e exemplos de código direto do fabricante.",
+                    docsCardBtn: "Acessar Docs"
+                },
+                en: {
+                    navSpecs: "Specifications",
+                    navDownloads: "Downloads",
+                    navLinks: "Links",
+                    heroTitle: "M5 Cardputer: The Maker Universe in Your Pocket.",
+                    heroSubtitle: "A powerful and portable development platform based on the ESP32-S3. From automation to retro gaming, your projects start here. Explore, create, and innovate.",
+                    btnStart: "Start Programming",
+                    btnProjects: "View Projects",
+                    specsTitle: "Technical Specifications ⚙️",
+                    specCPU: "CPU",
+                    specMemory: "Memory",
+                    specScreen: "Screen",
+                    specKeyboard: "Keyboard",
+                    specConnectivity: "Connectivity",
+                    specPorts: "Ports",
+                    specExtras: "Extras",
+                    downloadsTitle: "Downloads and Tools 🚀",
+                    burnerTitle: "Firmware Burner Software",
+                    burnerCardTitle: "M5Burner v3",
+                    burnerCardText: "The official M5Stack tool to burn firmware quickly and easily. Essential to get started.",
+                    burnerCardBtn: "Download M5Burner",
+                    ideTitle: "Development Environments (IDEs)",
+                    arduinoCardTitle: "Arduino IDE",
+                    arduinoCardText: "The classic and versatile environment for C/C++ programming. Perfect for accessing the vast library of projects from the Arduino community.",
+                    arduinoCardUrl: "Boards Manager URL: <code class='code'>https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json</code>",
+                    arduinoCardBtn: "Download Arduino IDE",
+                    uiFlowCardTitle: "UIFlow 2.0",
+                    uiFlowCardText: "M5Stack's visual programming (Blockly) and MicroPython platform. Ideal for beginners and rapid prototyping.",
+                    uiFlowCardBtn: "Access UIFlow 2.0 (Web)",
+                    platformIoCardTitle: "PlatformIO",
+                    platformIoCardText: "A powerful alternative to the Arduino IDE, integrated into VS Code. It offers advanced debugging and library management.",
+                    platformIoCardBtn: "Install PlatformIO",
+                    linksTitle: "Official M5Stack Links",
+                    officialSiteCardTitle: "Official Site",
+                    officialSiteCardText: "Explore the complete ecosystem of M5Stack products.",
+                    officialSiteCardBtn: "Visit m5stack.com",
+                    productPageCardTitle: "Product Page",
+                    productPageCardText: "See details, accessories, and official documentation for the Cardputer.",
+                    productPageCardBtn: "View in Store",
+                    docsCardTitle: "Documentation",
+                    docsCardText: "Guides, tutorials, and code examples directly from the manufacturer.",
+                    docsCardBtn: "Access Docs"
+                },
+                es: {
+                    navSpecs: "Especificaciones",
+                    navDownloads: "Descargas",
+                    navLinks: "Enlaces",
+                    heroTitle: "M5 Cardputer: El Universo Maker en tu Bolsillo.",
+                    heroSubtitle: "Una potente y portátil plataforma de desarrollo basada en el ESP32-S3. Desde automatización hasta juegos retro, tus proyectos empiezan aquí. Explora, crea e innova.",
+                    btnStart: "Empezar a Programar",
+                    btnProjects: "Ver Proyectos",
+                    specsTitle: "Especificaciones Técnicas ⚙️",
+                    specCPU: "CPU",
+                    specMemory: "Memoria",
+                    specScreen: "Pantalla",
+                    specKeyboard: "Teclado",
+                    specConnectivity: "Conectividad",
+                    specPorts: "Puertos",
+                    specExtras: "Extras",
+                    downloadsTitle: "Descargas y Herramientas 🚀",
+                    burnerTitle: "Software de Grabación (Burner)",
+                    burnerCardTitle: "M5Burner v3",
+                    burnerCardText: "La herramienta oficial de M5Stack para grabar el firmware de forma rápida y fácil. Esencial para empezar.",
+                    burnerCardBtn: "Descargar M5Burner",
+                    ideTitle: "Entornos de Desarrollo (IDEs)",
+                    arduinoCardTitle: "Arduino IDE",
+                    arduinoCardText: "El entorno clásico y versátil para la programación en C/C++. Perfecto para acceder a la vasta biblioteca de proyectos de la comunidad Arduino.",
+                    arduinoCardUrl: "URL del Gestor de Tarjetas: <code class='code'>https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json</code>",
+                    arduinoCardBtn: "Descargar Arduino IDE",
+                    uiFlowCardTitle: "UIFlow 2.0",
+                    uiFlowCardText: "La plataforma de programación visual (Blockly) y MicroPython de M5Stack. Ideal para principiantes y prototipado rápido.",
+                    uiFlowCardBtn: "Acceder a UIFlow 2.0 (Web)",
+                    platformIoCardTitle: "PlatformIO",
+                    platformIoCardText: "Una potente alternativa al Arduino IDE, integrada en VS Code. Ofrece depuración avanzada y gestión de bibliotecas.",
+                    platformIoCardBtn: "Instalar PlatformIO",
+                    linksTitle: "Enlaces Oficiales de M5Stack",
+                    officialSiteCardTitle: "Sitio Oficial",
+                    officialSiteCardText: "Explora el ecosistema completo de productos de M5Stack.",
+                    officialSiteCardBtn: "Visitar m5stack.com",
+                    productPageCardTitle: "Página del Producto",
+                    productPageCardText: "Consulta los detalles, accesorios y documentación oficial del Cardputer.",
+                    productPageCardBtn: "Ver en la Tienda",
+                    docsCardTitle: "Documentación",
+                    docsCardText: "Guías, tutoriales y ejemplos de código directamente del fabricante.",
+                    docsCardBtn: "Acceder a la Documentación"
+                }
+            };
+
+            const langSwitcher = document.querySelector('.lang-switcher');
+            const langButtons = langSwitcher.querySelectorAll('button');
+            const translatableElements = document.querySelectorAll('[data-translate-key]');
+
+            const setLanguage = (lang) => {
+                translatableElements.forEach(el => {
+                    const key = el.dataset.translateKey;
+                    const translation = translations[lang][key];
+                    if (translation) {
+                        el.innerHTML = translation;
+                    }
+                });
+                
+                langButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.lang === lang);
+                });
+
+                localStorage.setItem('language', lang);
+                document.documentElement.lang = lang;
+            };
+
+            langButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    setLanguage(button.dataset.lang);
+                });
+            });
+
+            const savedLang = localStorage.getItem('language') || 'pt';
+            setLanguage(savedLang);
+        });
+    </script>
+</body>
+</html>
