@@ -119,9 +119,12 @@
             margin: 0 auto;
         }
 
+        /* CSS ALTERADO AQUI */
         .navbar .logo {
             font-size: 1.5rem;
             font-weight: 700;
+            color: var(--primary-text); /* Garante que não fique azul */
+            text-decoration: none;     /* Remove o sublinhado */
         }
 
         .navbar .logo strong {
@@ -400,7 +403,7 @@
 
     <header class="main-header">
         <nav class="navbar">
-            <div class="logo">Cardputer <strong>Hub</strong></div>
+            <a href="#" class="logo">Cardputer <strong>Hub</strong></a>
             <div class="nav-menu">
                 <ul class="nav-links">
                     <li><a href="#specs" data-translate-key="navSpecs">Especificações</a></li>
